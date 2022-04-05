@@ -1,39 +1,51 @@
 import "../App.css";
-import { Dropdown, Button, Menu, message, Space } from "antd";
-import { DownOutlined } from "@ant-design/icons";
-
+import { Input, Select, message } from "antd";
+const { Option } = Select;
 const currencies = require("../currencies.json");
 
 function handleMenuClick(e) {
-	message.info("Click on menu item.");
-	console.log("click", e);
+	message.info("Selected currency: " + e.target.innerHTML);
+	console.log("click", e.target.innerHTML);
 }
 
-const menu = (
-	<Menu onClick={handleMenuClick}>
-		{currencies.map((c) => (
-			<Menu.Item key={c.Code}>{c.Code}</Menu.Item>
-		))}
-	</Menu>
-);
+const createMenu = (value) => {
+	return (
+		<Select
+			onClick={handleMenuClick}
+			showSearch
+			style={{ width: 200 }}
+			defaultValue={value}
+			optionFilterProp="children"
+			filterOption={(input, option) =>
+				option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+			}
+			filterSort={(optionA, optionB) =>
+				optionA.children
+					.toLowerCase()
+					.localeCompare(optionB.children.toLowerCase())
+			}
+		>
+			{currencies.map((c) => (
+				<Option value={c.Code} key={c.Code}>
+					{c.Code}
+				</Option>
+			))}
+		</Select>
+	);
+};
 
 export default function SelectCurrency() {
 	return (
-		<div className="filter">
-			<h1 className="title">Currencies</h1>
-			<Space wrap>
-				<Dropdown overlay={menu}>
-					<Button>
-						From <DownOutlined />
-					</Button>
-				</Dropdown>
-
-				<Dropdown overlay={menu}>
-					<Button>
-						To <DownOutlined />
-					</Button>
-				</Dropdown>
-			</Space>
+		<div className="site-input-group-wrapper">
+			<Input.Group compact>
+				<Input.Search
+					allowClear
+					style={{ width: "40%" }}
+					defaultValue="1"
+				/>
+				{createMenu("EUR")}
+				{createMenu("USD")}
+			</Input.Group>
 		</div>
 	);
 }
