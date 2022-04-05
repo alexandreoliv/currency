@@ -1,24 +1,8 @@
 import "./App.css";
 import { Layout, Menu, Breadcrumb } from "antd";
-import { Dropdown, Button, message, Space } from "antd";
-import { DownOutlined, UserOutlined } from "@ant-design/icons";
+import SelectCurrency from "./Components/SelectCurrency";
+import Rates from "./Components/Rates";
 const { Header, Content, Footer } = Layout;
-
-function handleMenuClick(e) {
-	message.info("Click on menu item.");
-	console.log("click", e);
-}
-
-const menu = (
-	<Menu onClick={handleMenuClick}>
-		<Menu.Item key="1" icon={<UserOutlined />}>
-			1st menu item
-		</Menu.Item>
-		<Menu.Item key="2" icon={<UserOutlined />}>
-			2nd menu item
-		</Menu.Item>
-	</Menu>
-);
 
 function App() {
 	return (
@@ -28,7 +12,7 @@ function App() {
 				<Menu
 					theme="dark"
 					mode="horizontal"
-					defaultSelectedKeys={["2"]}
+					defaultSelectedKeys={["1"]}
 				>
 					<Menu.Item key="1">nav 1</Menu.Item>
 					<Menu.Item key="2">nav 2</Menu.Item>
@@ -47,13 +31,8 @@ function App() {
 					className="site-layout-background"
 					style={{ padding: 24, minHeight: 380 }}
 				>
-					<Space wrap>
-						<Dropdown overlay={menu}>
-							<Button>
-								Button <DownOutlined />
-							</Button>
-						</Dropdown>
-					</Space>
+					<SelectCurrency />
+					<Rates />
 				</div>
 			</Content>
 			<Footer style={{ textAlign: "center" }}>
