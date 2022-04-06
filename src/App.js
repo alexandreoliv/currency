@@ -9,8 +9,44 @@ const axios = require("axios");
 class App extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { rates: "" };
+		this.state = {
+			rates: "",
+			amount: 1,
+			currencyFrom: "EUR",
+			currencyTo: "USD",
+		};
 	}
+
+	handleExchange = (val, e) => {
+		if (typeof e === "undefined") {
+			// it's a number
+			console.log("inside App.js/handleExchange: amount: " + val);
+			if (typeof val === "number") {
+				this.setState({
+					amount: val,
+				});
+			}
+		} else {
+			// it's a currency
+			const { id, value } = e;
+			console.log(
+				"inside App.js/handleExchange: id and value: " +
+					id +
+					", " +
+					value
+			);
+
+			if (id === "currencyFrom") {
+				this.setState({
+					currencyFrom: value,
+				});
+			} else if (id === "currencyTo") {
+				this.setState({
+					currencyTo: value,
+				});
+			}
+		}
+	};
 
 	// componentDidMount() {
 	// 	axios
@@ -51,7 +87,7 @@ class App extends Component {
 						className="site-layout-background"
 						style={{ padding: 24, minHeight: 380 }}
 					>
-						<SelectCurrency />
+						<SelectCurrency handleExchange={this.handleExchange} />
 						<Rates />
 					</div>
 				</Content>

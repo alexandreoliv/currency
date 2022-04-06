@@ -1,20 +1,18 @@
 import "../App.css";
-import { Input, Select, message } from "antd";
+import React from "react";
+import { Form, InputNumber, Select } from "antd";
 const { Option } = Select;
 const currencies = require("../currencies.json");
 
-function handleMenuClick(e) {
-	message.info("Selected currency: " + e.target.innerHTML);
-	console.log("click", e.target.innerHTML);
-}
-
-const createMenu = (value) => {
+const createMenu = (id, defaultValue, handleExchange) => {
 	return (
 		<Select
-			onClick={handleMenuClick}
 			showSearch
 			style={{ width: 200 }}
-			defaultValue={value}
+			required
+			id={id}
+			defaultValue={defaultValue}
+			onSelect={(value, event) => handleExchange(value, event)}
 			optionFilterProp="children"
 			filterOption={(input, option) =>
 				option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -26,7 +24,7 @@ const createMenu = (value) => {
 			}
 		>
 			{currencies.map((c) => (
-				<Option value={c.Code} key={c.Code}>
+				<Option id={id} value={c.Code} key={c.Code}>
 					{c.Code}
 				</Option>
 			))}
@@ -34,18 +32,32 @@ const createMenu = (value) => {
 	);
 };
 
-export default function SelectCurrency() {
+export default function SelectCurrency({ handleExchange }) {
 	return (
-		<div className="site-input-group-wrapper">
-			<Input.Group compact>
-				<Input.Search
-					allowClear
-					style={{ width: "40%" }}
+		<Form
+			labelCol={{
+				span: 4,
+			}}
+			wrapperCol={{
+				span: 14,
+			}}
+			layout="horizontal"
+		>
+			<Form.Item label="Amount">
+				<InputNumber
+					id="amount"
+					min={0}
 					defaultValue="1"
+					required
+					onChange={(value, event) => handleExchange(value, event)}
 				/>
-				{createMenu("EUR")}
-				{createMenu("USD")}
-			</Input.Group>
-		</div>
+			</Form.Item>
+			<Form.Item label="From">
+				{createMenu("currencyFrom", "EUR", handleExchange)}
+			</Form.Item>
+			<Form.Item label="To">
+				{createMenu("currencyTo", "USD", handleExchange)}
+			</Form.Item>
+		</Form>
 	);
 }
