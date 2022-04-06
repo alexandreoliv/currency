@@ -6,15 +6,18 @@ import Rates from "./Components/Rates";
 import { Component } from "react";
 const { Header, Content, Footer } = Layout;
 const axios = require("axios");
-// const currencies = require("./currencies.json");
-const rates = require("./EUR_rates.json");
-const currencies = Object.keys(rates);
+// // const currencies = require("./currencies.json");
+// const rates = require("./EUR_rates.json");
+// const currencies = Object.keys(rates);
 
 class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			// rates: rates,
+			// currencies: currencies,
 			rates: "",
+			currencies: "",
 			amount: 1,
 			currencyFrom: "EUR",
 			currencyTo: "USD",
@@ -52,17 +55,19 @@ class App extends Component {
 		}
 	};
 
-	// componentDidMount() {
-	// 	axios
-	// 		.get(
-	// 			`http://api.exchangeratesapi.io/v1/latest?access_key=${process.env.REACT_APP_SECRET_KEY}`
-	// 		)
-	// 		.then((response) => {
-	// 			console.log(response.data.rates);
-	// 			this.setState({ rates: response.data.rates });
-	// 		})
-	// 		.catch((err) => console.log(err));
-	// }
+	componentDidMount() {
+		axios
+			.get(
+				`http://api.exchangeratesapi.io/v1/latest?access_key=${process.env.REACT_APP_SECRET_KEY}`
+			)
+			.then((response) => {
+				console.log("inside componentDidMount: ", response.data.rates);
+				this.setState({ rates: response.data.rates });
+				const currencies = Object.keys(this.state.rates);
+				this.setState({ currencies: currencies });
+			})
+			.catch((err) => console.log(err));
+	}
 
 	render() {
 		return (
@@ -88,18 +93,18 @@ class App extends Component {
 					>
 						<SelectCurrency
 							handleExchange={this.handleExchange}
-							currencies={currencies}
+							currencies={this.state.currencies}
 						/>
 						<Rate
-							currencies={currencies}
-							rates={rates}
+							currencies={this.state.currencies}
+							rates={this.state.rates}
 							amount={this.state.amount}
 							currencyFrom={this.state.currencyFrom}
 							currencyTo={this.state.currencyTo}
 						/>
 						<Rates
-							currencies={currencies}
-							rates={rates}
+							currencies={this.state.currencies}
+							rates={this.state.rates}
 							amount={this.state.amount}
 							currencyFrom={this.state.currencyFrom}
 							currencyTo={this.state.currencyTo}

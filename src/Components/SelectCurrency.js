@@ -32,31 +32,45 @@ const createMenu = (id, defaultValue, handleExchange, currencies) => {
 };
 
 export default function SelectCurrency({ handleExchange, currencies }) {
-	return (
-		<Form
-			labelCol={{
-				span: 4,
-			}}
-			wrapperCol={{
-				span: 14,
-			}}
-			layout="horizontal"
-		>
-			<Form.Item label="Amount">
-				<InputNumber
-					id="amount"
-					min={0}
-					defaultValue="1"
-					required
-					onChange={(value, event) => handleExchange(value, event)}
-				/>
-			</Form.Item>
-			<Form.Item label="From">
-				{createMenu("currencyFrom", "EUR", handleExchange, currencies)}
-			</Form.Item>
-			<Form.Item label="To">
-				{createMenu("currencyTo", "USD", handleExchange, currencies)}
-			</Form.Item>
-		</Form>
-	);
+	if (currencies) {
+		return (
+			<Form
+				labelCol={{
+					span: 4,
+				}}
+				wrapperCol={{
+					span: 14,
+				}}
+				layout="horizontal"
+			>
+				<Form.Item label="Amount">
+					<InputNumber
+						id="amount"
+						min={0}
+						defaultValue="1"
+						required
+						onChange={(value, event) =>
+							handleExchange(value, event)
+						}
+					/>
+				</Form.Item>
+				<Form.Item label="From">
+					{createMenu(
+						"currencyFrom",
+						"EUR",
+						handleExchange,
+						currencies
+					)}
+				</Form.Item>
+				<Form.Item label="To">
+					{createMenu(
+						"currencyTo",
+						"USD",
+						handleExchange,
+						currencies
+					)}
+				</Form.Item>
+			</Form>
+		);
+	} else return <div></div>;
 }

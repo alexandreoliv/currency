@@ -17,19 +17,21 @@ const columns = [
 ];
 
 export default function Rates(props) {
-	const { currencies, rates, amount } = props;
-	console.log("rates: ", rates);
-	const data = currencies.map((c) => ({
-		key: c,
-		currency: c,
-		rate: rates[c],
-		amount: (amount * rates[c]).toFixed(2),
-	}));
+	if (props.currencies) {
+		const { currencies, rates, amount } = props;
+		console.log("rates: ", rates);
+		const data = currencies.map((c) => ({
+			key: c,
+			currency: c,
+			rate: rates[c],
+			amount: (amount * rates[c]).toFixed(2),
+		}));
 
-	return (
-		<div>
-			<h1>Rates</h1>
-			<Table columns={columns} dataSource={data} size="middle" />
-		</div>
-	);
+		return (
+			<div>
+				<h1>Rates</h1>
+				<Table columns={columns} dataSource={data} size="middle" />
+			</div>
+		);
+	} else return <div></div>;
 }
