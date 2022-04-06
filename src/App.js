@@ -1,11 +1,13 @@
 import "./App.css";
-import { Layout, Menu, Breadcrumb } from "antd";
+import { Layout, Menu } from "antd";
 import SelectCurrency from "./Components/SelectCurrency";
+import Rate from "./Components/Rate";
 import Rates from "./Components/Rates";
 import { Component } from "react";
 const { Header, Content, Footer } = Layout;
 const axios = require("axios");
 const currencies = require("./currencies.json");
+const rates = require("./EUR_rates.json");
 
 class App extends Component {
 	constructor(props) {
@@ -71,19 +73,14 @@ class App extends Component {
 						mode="horizontal"
 						defaultSelectedKeys={["1"]}
 					>
-						<Menu.Item key="1">nav 1</Menu.Item>
-						<Menu.Item key="2">nav 2</Menu.Item>
+						<Menu.Item key="1">Currency Converter</Menu.Item>
+						<Menu.Item key="2">Historic Rates</Menu.Item>
 					</Menu>
 				</Header>
 				<Content
 					className="site-layout"
 					style={{ padding: "0 50px", marginTop: 64 }}
 				>
-					<Breadcrumb style={{ margin: "16px 0" }}>
-						<Breadcrumb.Item>Home</Breadcrumb.Item>
-						<Breadcrumb.Item>List</Breadcrumb.Item>
-						<Breadcrumb.Item>App</Breadcrumb.Item>
-					</Breadcrumb>
 					<div
 						className="site-layout-background"
 						style={{ padding: 24, minHeight: 380 }}
@@ -92,12 +89,23 @@ class App extends Component {
 							handleExchange={this.handleExchange}
 							currencies={currencies}
 						/>
-						<Rates currencies={currencies} />
+						<Rate
+							currencies={currencies}
+							rates={rates}
+							amount={this.state.amount}
+							currencyFrom={this.state.currencyFrom}
+							currencyTo={this.state.currencyTo}
+						/>
+						<Rates
+							currencies={currencies}
+							rates={rates}
+							amount={this.state.amount}
+							currencyFrom={this.state.currencyFrom}
+							currencyTo={this.state.currencyTo}
+						/>
 					</div>
 				</Content>
-				<Footer style={{ textAlign: "center" }}>
-					Ant Design ©2018 Created by Ant UED
-				</Footer>
+				<Footer style={{ textAlign: "center" }}></Footer>
 			</Layout>
 		);
 	}

@@ -16,12 +16,14 @@ const columns = [
 	},
 ];
 
-export default function Rates(currencies) {
-	const data = currencies.currencies.map((c) => ({
+export default function Rates(props) {
+	const { currencies, rates, amount } = props;
+	console.log("rates: ", rates);
+	const data = currencies.map((c) => ({
 		key: c.Code,
 		currency: c.Code,
-		rate: "1.2",
-		amount: "10",
+		rate: rates[0][c.Code],
+		amount: (amount * rates[0][c.Code]).toFixed(2),
 	}));
 
 	return (
