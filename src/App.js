@@ -6,8 +6,9 @@ import Rates from "./Components/Rates";
 import { Component } from "react";
 const { Header, Content, Footer } = Layout;
 const axios = require("axios");
-const currencies = require("./currencies.json");
+// const currencies = require("./currencies.json");
 const rates = require("./EUR_rates.json");
+const currencies = Object.keys(rates);
 
 class App extends Component {
 	constructor(props) {

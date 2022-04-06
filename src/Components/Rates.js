@@ -20,10 +20,10 @@ export default function Rates(props) {
 	const { currencies, rates, amount } = props;
 	console.log("rates: ", rates);
 	const data = currencies.map((c) => ({
-		key: c.Code,
-		currency: c.Code,
-		rate: rates[0][c.Code],
-		amount: (amount * rates[0][c.Code]).toFixed(2),
+		key: c,
+		currency: c,
+		rate: rates[c],
+		amount: (amount * rates[c]).toFixed(2),
 	}));
 
 	return (

@@ -23,8 +23,8 @@ const createMenu = (id, defaultValue, handleExchange, currencies) => {
 			}
 		>
 			{currencies.map((c) => (
-				<Option id={id} value={c.Code} key={c.Code}>
-					{c.Code}
+				<Option id={id} value={c} key={c}>
+					{c}
 				</Option>
 			))}
 		</Select>
