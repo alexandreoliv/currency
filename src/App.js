@@ -75,7 +75,7 @@ class App extends Component {
 		// 	.catch((err) => console.log(err));
 
 		// Local method
-		const rates = require("./EUR_rates.json");
+		const rates = require("./data/EUR_rates.json");
 		this.setState({ rates: rates });
 		const currencies = Object.keys(rates);
 		this.setState({ currencies: currencies });

@@ -1,6 +1,6 @@
 import SelectCurrency from "../Components/SelectCurrency";
 import Rate from "../Components/Rate";
-import Rates from "../Components/Rates";
+import HistoricRates from "../Components/HistoricRates";
 
 export default function Historic(props) {
 	const {
@@ -11,14 +11,16 @@ export default function Historic(props) {
 		currencyFrom,
 		currencyTo,
 	} = props;
-    const historic = true;
+	const historic = true;
 
 	return (
 		<div>
 			<SelectCurrency
 				handleExchange={handleExchange}
 				currencies={currencies}
-                historic={historic}
+				currencyFrom={currencyFrom}
+				currencyTo={currencyTo}
+				historic={historic}
 			/>
 			<Rate
 				currencies={currencies}
@@ -26,7 +28,13 @@ export default function Historic(props) {
 				amount={amount}
 				currencyFrom={currencyFrom}
 				currencyTo={currencyTo}
-                historic={historic}
+				historic={historic}
+			/>
+			<HistoricRates
+				currencies={currencies}
+				currencyFrom={currencyFrom}
+				currencyTo={currencyTo}
+				historic={historic}
 			/>
 		</div>
 	);

@@ -18,6 +18,8 @@ export default function Converter(props) {
 			<SelectCurrency
 				handleExchange={handleExchange}
 				currencies={currencies}
+				currencyFrom={currencyFrom}
+				currencyTo={currencyTo}
 				historic={historic}
 			/>
 			<Rate

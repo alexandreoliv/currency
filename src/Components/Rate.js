@@ -3,14 +3,7 @@ import { Statistic } from "antd";
 
 export default function Rate(props) {
 	if (props.currencies) {
-		const {
-			currencies,
-			rates,
-			amount,
-			currencyFrom,
-			currencyTo,
-			historic,
-		} = props;
+		const { rates, amount, currencyTo, historic } = props;
 
 		return (
 			<div>

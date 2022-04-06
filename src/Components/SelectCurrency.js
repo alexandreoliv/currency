@@ -1,5 +1,4 @@
 import "../App.css";
-import React from "react";
 import { Form, InputNumber, Select } from "antd";
 const { Option } = Select;
 
@@ -31,11 +30,9 @@ const createMenu = (id, defaultValue, handleExchange, currencies) => {
 	);
 };
 
-export default function SelectCurrency({
-	handleExchange,
-	currencies,
-	historic,
-}) {
+export default function SelectCurrency(props) {
+	const { handleExchange, currencies, currencyFrom, currencyTo, historic } =
+		props;
 	if (currencies) {
 		return (
 			<Form
@@ -63,7 +60,7 @@ export default function SelectCurrency({
 				<Form.Item label="From">
 					{createMenu(
 						"currencyFrom",
-						"EUR",
+						currencyFrom,
 						handleExchange,
 						currencies
 					)}
@@ -71,7 +68,7 @@ export default function SelectCurrency({
 				<Form.Item label="To">
 					{createMenu(
 						"currencyTo",
-						"USD",
+						currencyTo,
 						handleExchange,
 						currencies
 					)}
