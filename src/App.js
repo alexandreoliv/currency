@@ -5,6 +5,7 @@ import Rates from "./Components/Rates";
 import { Component } from "react";
 const { Header, Content, Footer } = Layout;
 const axios = require("axios");
+const currencies = require("./currencies.json");
 
 class App extends Component {
 	constructor(props) {
@@ -87,8 +88,11 @@ class App extends Component {
 						className="site-layout-background"
 						style={{ padding: 24, minHeight: 380 }}
 					>
-						<SelectCurrency handleExchange={this.handleExchange} />
-						<Rates />
+						<SelectCurrency
+							handleExchange={this.handleExchange}
+							currencies={currencies}
+						/>
+						<Rates currencies={currencies} />
 					</div>
 				</Content>
 				<Footer style={{ textAlign: "center" }}>

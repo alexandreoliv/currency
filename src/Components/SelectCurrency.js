@@ -2,9 +2,8 @@ import "../App.css";
 import React from "react";
 import { Form, InputNumber, Select } from "antd";
 const { Option } = Select;
-const currencies = require("../currencies.json");
 
-const createMenu = (id, defaultValue, handleExchange) => {
+const createMenu = (id, defaultValue, handleExchange, currencies) => {
 	return (
 		<Select
 			showSearch
@@ -32,7 +31,7 @@ const createMenu = (id, defaultValue, handleExchange) => {
 	);
 };
 
-export default function SelectCurrency({ handleExchange }) {
+export default function SelectCurrency({ handleExchange, currencies }) {
 	return (
 		<Form
 			labelCol={{
@@ -53,10 +52,10 @@ export default function SelectCurrency({ handleExchange }) {
 				/>
 			</Form.Item>
 			<Form.Item label="From">
-				{createMenu("currencyFrom", "EUR", handleExchange)}
+				{createMenu("currencyFrom", "EUR", handleExchange, currencies)}
 			</Form.Item>
 			<Form.Item label="To">
-				{createMenu("currencyTo", "USD", handleExchange)}
+				{createMenu("currencyTo", "USD", handleExchange, currencies)}
 			</Form.Item>
 		</Form>
 	);
