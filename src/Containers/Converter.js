@@ -37,7 +37,6 @@ export default function Converter(props) {
 				currencyFrom={currencyFrom}
 				currencyTo={currencyTo}
 			/>
-			)
 		</div>
 	);
 }

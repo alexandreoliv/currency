@@ -19,7 +19,6 @@ const columns = [
 export default function Rates(props) {
 	if (props.currencies) {
 		const { currencies, rates, amount } = props;
-		console.log("rates: ", rates);
 		const data = currencies.map((c) => ({
 			key: c,
 			currency: c,
@@ -29,6 +28,7 @@ export default function Rates(props) {
 
 		return (
 			<div>
+				<br />
 				<h1>Other Currencies</h1>
 				<Table columns={columns} dataSource={data} size="middle" />
 			</div>

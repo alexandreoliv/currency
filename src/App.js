@@ -1,25 +1,15 @@
 import "./App.css";
 import { Layout, Menu } from "antd";
-import SelectCurrency from "./Components/SelectCurrency";
-import Rate from "./Components/Rate";
-import Rates from "./Components/Rates";
 import { Component } from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Converter from "./Containers/Converter";
 import Historic from "./Containers/Historic";
-
 const { Header, Content, Footer } = Layout;
-const axios = require("axios");
-// // const currencies = require("./currencies.json");
-// const rates = require("./EUR_rates.json");
-// const currencies = Object.keys(rates);
 
 class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			// rates: rates,
-			// currencies: currencies,
 			rates: "",
 			currencies: "",
 			amount: 1,
@@ -31,7 +21,6 @@ class App extends Component {
 	handleExchange = (val, e) => {
 		if (typeof e === "undefined") {
 			// it's a number
-			console.log("inside App.js/handleExchange: amount: " + val);
 			if (typeof val === "number") {
 				this.setState({
 					amount: val,
@@ -40,13 +29,6 @@ class App extends Component {
 		} else {
 			// it's a currency
 			const { id, value } = e;
-			console.log(
-				"inside App.js/handleExchange: id and value: " +
-					id +
-					", " +
-					value
-			);
-
 			if (id === "currencyFrom") {
 				this.setState({
 					currencyFrom: value,
@@ -60,40 +42,26 @@ class App extends Component {
 	};
 
 	componentDidMount() {
+		// API method:
 		const API_KEY = process.env.REACT_APP_SECRET_KEY;
-		// axios
-		// 	.get(
-		// 		`http://api.exchangeratesapi.io/v1/latest?access_key=${API_KEY}`
-		// // 		`http://api.exchangeratesapi.io/v1/latest?access_key=${process.env.REACT_APP_SECRET_KEY}`
-		// 	)
-		// 	.then((response) => {
-		// 		console.log("inside componentDidMount: ", response.data.rates);
-		// 		this.setState({ rates: response.data.rates });
-		// 		const currencies = Object.keys(this.state.rates);
-		// 		this.setState({ currencies: currencies });
-		// 	})
-		// 	.catch((err) => console.log(err));
+		const axios = require("axios");
+		axios
+			.get(
+				`http://api.exchangeratesapi.io/v1/latest?access_key=${API_KEY}`
+			)
+			.then((response) => {
+				console.log("inside componentDidMount: ", response.data.rates);
+				this.setState({ rates: response.data.rates });
+				const currencies = Object.keys(this.state.rates);
+				this.setState({ currencies: currencies });
+			})
+			.catch((err) => console.log(err));
 
-		// Local method
-		const rates = require("./data/EUR_rates.json");
-		this.setState({ rates: rates });
-		const currencies = Object.keys(rates);
-		this.setState({ currencies: currencies });
-	}
-
-	componentDidUpdate() {
-		const API_KEY = process.env.REACT_APP_SECRET_KEY;
-		// const base = this.state.currencyFrom;
-		const base = "EUR"; // hardcoding because API's free plan doesn't allow me to base the base currency
-		// axios
-		// 	.get(
-		// 		`http://api.exchangeratesapi.io/v1/latest?access_key=${API_KEY}&base=${base}`
-		// 	)
-		// 	.then((response) => {
-		// 		console.log("inside componentDidUpdate: ", response.data.rates);
-		// 		this.setState({ rates: response.data.rates });
-		// 	})
-		// 	.catch((err) => console.log(err));
+		// Local method: (if the API's free requests are over)
+		// const rates = require("./data/EUR_rates.json");
+		// this.setState({ rates: rates });
+		// const currencies = Object.keys(rates);
+		// this.setState({ currencies: currencies });
 	}
 
 	render() {

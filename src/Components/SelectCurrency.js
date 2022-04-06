@@ -6,7 +6,7 @@ const createMenu = (id, defaultValue, handleExchange, currencies) => {
 	return (
 		<Select
 			showSearch
-			style={{ width: 200 }}
+			style={{ width: 200, padding: "0 0 0 5px" }}
 			required
 			id={id}
 			defaultValue={defaultValue}
@@ -44,35 +44,38 @@ export default function SelectCurrency(props) {
 				}}
 				layout="horizontal"
 			>
-				{historic ? null : (
-					<Form.Item label="Amount">
-						<InputNumber
-							id="amount"
-							min={0}
-							defaultValue="1"
-							required
-							onChange={(value, event) =>
-								handleExchange(value, event)
-							}
-						/>
+				<div id="selectCurrency">
+					{historic ? null : (
+						<Form.Item>
+							<InputNumber
+								id="amount"
+								min={0}
+								defaultValue="1"
+								style={{width: "150px", margin: "0 10px 0 0"}}
+								required
+								onChange={(value, event) =>
+									handleExchange(value, event)
+								}
+							/>
+						</Form.Item>
+					)}
+					<Form.Item label="From">
+						{createMenu(
+							"currencyFrom",
+							currencyFrom,
+							handleExchange,
+							currencies
+						)}
 					</Form.Item>
-				)}
-				<Form.Item label="From">
-					{createMenu(
-						"currencyFrom",
-						currencyFrom,
-						handleExchange,
-						currencies
-					)}
-				</Form.Item>
-				<Form.Item label="To">
-					{createMenu(
-						"currencyTo",
-						currencyTo,
-						handleExchange,
-						currencies
-					)}
-				</Form.Item>
+					<Form.Item label="To">
+						{createMenu(
+							"currencyTo",
+							currencyTo,
+							handleExchange,
+							currencies
+						)}
+					</Form.Item>
+				</div>
 			</Form>
 		);
 	} else return <div></div>;

@@ -6,7 +6,7 @@ export default function Rate(props) {
 		const { rates, amount, currencyTo, historic } = props;
 
 		return (
-			<div>
+			<div id="rateDiv">
 				{historic ? null : (
 					<Statistic
 						title={"Total amount in " + currencyTo}

@@ -1,5 +1,19 @@
 @import 'antd/dist/antd.css';
 
+#selectCurrency {
+  display: flex;
+  justify-content: center;
+}
+
+#rateDiv {
+  display: flex;
+  justify-content: center;
+}
+
+#rateDiv div {
+  margin: 0 40px;
+}
+
 .App {
   text-align: center;
 }

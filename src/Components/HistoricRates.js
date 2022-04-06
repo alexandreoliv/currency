@@ -42,6 +42,7 @@ export default function Historic(props) {
 
 		return (
 			<div>
+				<br />
 				<h1>Past</h1>
 				<Table columns={columns} dataSource={data} size="middle" />
 			</div>
