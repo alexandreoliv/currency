@@ -56,17 +56,23 @@ class App extends Component {
 	};
 
 	componentDidMount() {
-		axios
-			.get(
-				`http://api.exchangeratesapi.io/v1/latest?access_key=${process.env.REACT_APP_SECRET_KEY}`
-			)
-			.then((response) => {
-				console.log("inside componentDidMount: ", response.data.rates);
-				this.setState({ rates: response.data.rates });
-				const currencies = Object.keys(this.state.rates);
-				this.setState({ currencies: currencies });
-			})
-			.catch((err) => console.log(err));
+		// axios
+		// 	.get(
+		// 		`http://api.exchangeratesapi.io/v1/latest?access_key=${process.env.REACT_APP_SECRET_KEY}`
+		// 	)
+		// 	.then((response) => {
+		// 		console.log("inside componentDidMount: ", response.data.rates);
+		// 		this.setState({ rates: response.data.rates });
+		// 		const currencies = Object.keys(this.state.rates);
+		// 		this.setState({ currencies: currencies });
+		// 	})
+		// 	.catch((err) => console.log(err));
+
+		// Local method
+		const rates = require("./EUR_rates.json");
+		this.setState({ rates: rates });
+		const currencies = Object.keys(rates);
+		this.setState({ currencies: currencies });
 	}
 
 	render() {
