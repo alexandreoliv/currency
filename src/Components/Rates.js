@@ -29,7 +29,7 @@ export default function Rates(props) {
 
 		return (
 			<div>
-				<h1>Rates</h1>
+				<h1>Other Currencies</h1>
 				<Table columns={columns} dataSource={data} size="middle" />
 			</div>
 		);

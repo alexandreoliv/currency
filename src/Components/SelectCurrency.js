@@ -31,7 +31,11 @@ const createMenu = (id, defaultValue, handleExchange, currencies) => {
 	);
 };
 
-export default function SelectCurrency({ handleExchange, currencies }) {
+export default function SelectCurrency({
+	handleExchange,
+	currencies,
+	historic,
+}) {
 	if (currencies) {
 		return (
 			<Form
@@ -43,17 +47,19 @@ export default function SelectCurrency({ handleExchange, currencies }) {
 				}}
 				layout="horizontal"
 			>
-				<Form.Item label="Amount">
-					<InputNumber
-						id="amount"
-						min={0}
-						defaultValue="1"
-						required
-						onChange={(value, event) =>
-							handleExchange(value, event)
-						}
-					/>
-				</Form.Item>
+				{historic ? null : (
+					<Form.Item label="Amount">
+						<InputNumber
+							id="amount"
+							min={0}
+							defaultValue="1"
+							required
+							onChange={(value, event) =>
+								handleExchange(value, event)
+							}
+						/>
+					</Form.Item>
+				)}
 				<Form.Item label="From">
 					{createMenu(
 						"currencyFrom",

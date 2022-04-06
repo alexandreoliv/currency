@@ -4,6 +4,10 @@ import SelectCurrency from "./Components/SelectCurrency";
 import Rate from "./Components/Rate";
 import Rates from "./Components/Rates";
 import { Component } from "react";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import Converter from "./Containers/Converter";
+import Historic from "./Containers/Historic";
+
 const { Header, Content, Footer } = Layout;
 const axios = require("axios");
 // // const currencies = require("./currencies.json");
@@ -56,9 +60,11 @@ class App extends Component {
 	};
 
 	componentDidMount() {
+		const API_KEY = process.env.REACT_APP_SECRET_KEY;
 		// axios
 		// 	.get(
-		// 		`http://api.exchangeratesapi.io/v1/latest?access_key=${process.env.REACT_APP_SECRET_KEY}`
+		// 		`http://api.exchangeratesapi.io/v1/latest?access_key=${API_KEY}`
+		// // 		`http://api.exchangeratesapi.io/v1/latest?access_key=${process.env.REACT_APP_SECRET_KEY}`
 		// 	)
 		// 	.then((response) => {
 		// 		console.log("inside componentDidMount: ", response.data.rates);
@@ -75,50 +81,90 @@ class App extends Component {
 		this.setState({ currencies: currencies });
 	}
 
+	componentDidUpdate() {
+		const API_KEY = process.env.REACT_APP_SECRET_KEY;
+		// const base = this.state.currencyFrom;
+		const base = "EUR"; // hardcoding because API's free plan doesn't allow me to base the base currency
+		// axios
+		// 	.get(
+		// 		`http://api.exchangeratesapi.io/v1/latest?access_key=${API_KEY}&base=${base}`
+		// 	)
+		// 	.then((response) => {
+		// 		console.log("inside componentDidUpdate: ", response.data.rates);
+		// 		this.setState({ rates: response.data.rates });
+		// 	})
+		// 	.catch((err) => console.log(err));
+	}
+
 	render() {
 		return (
-			<Layout>
-				<Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
-					<div className="logo" />
-					<Menu
-						theme="dark"
-						mode="horizontal"
-						defaultSelectedKeys={["1"]}
+			<Router>
+				<Layout>
+					<Header
+						style={{ position: "fixed", zIndex: 1, width: "100%" }}
 					>
-						<Menu.Item key="1">Currency Converter</Menu.Item>
-						<Menu.Item key="2">Historic Rates</Menu.Item>
-					</Menu>
-				</Header>
-				<Content
-					className="site-layout"
-					style={{ padding: "0 50px", marginTop: 64 }}
-				>
-					<div
-						className="site-layout-background"
-						style={{ padding: 24, minHeight: 380 }}
+						<div className="logo" />
+						<Menu
+							theme="dark"
+							mode="horizontal"
+							defaultSelectedKeys={["1"]}
+						>
+							<Menu.Item key="1">
+								<Link to="/" />
+								Currency Converter
+							</Menu.Item>
+
+							<Menu.Item key="2">
+								<Link to="historic" />
+								Historic Rates
+							</Menu.Item>
+						</Menu>
+					</Header>
+					<Content
+						className="site-layout"
+						style={{ padding: "0 50px", marginTop: 64 }}
 					>
-						<SelectCurrency
-							handleExchange={this.handleExchange}
-							currencies={this.state.currencies}
-						/>
-						<Rate
-							currencies={this.state.currencies}
-							rates={this.state.rates}
-							amount={this.state.amount}
-							currencyFrom={this.state.currencyFrom}
-							currencyTo={this.state.currencyTo}
-						/>
-						<Rates
-							currencies={this.state.currencies}
-							rates={this.state.rates}
-							amount={this.state.amount}
-							currencyFrom={this.state.currencyFrom}
-							currencyTo={this.state.currencyTo}
-						/>
-					</div>
-				</Content>
-				<Footer style={{ textAlign: "center" }}></Footer>
-			</Layout>
+						<div
+							className="site-layout-background"
+							style={{ padding: 24, minHeight: 380 }}
+						>
+							<Routes>
+								<Route
+									path="/"
+									element={
+										<Converter
+											handleExchange={this.handleExchange}
+											currencies={this.state.currencies}
+											rates={this.state.rates}
+											amount={this.state.amount}
+											currencyFrom={
+												this.state.currencyFrom
+											}
+											currencyTo={this.state.currencyTo}
+										/>
+									}
+								/>
+								<Route
+									path="historic"
+									element={
+										<Historic
+											handleExchange={this.handleExchange}
+											currencies={this.state.currencies}
+											rates={this.state.rates}
+											amount={this.state.amount}
+											currencyFrom={
+												this.state.currencyFrom
+											}
+											currencyTo={this.state.currencyTo}
+										/>
+									}
+								/>
+							</Routes>
+						</div>
+					</Content>
+					<Footer style={{ textAlign: "center" }}></Footer>
+				</Layout>
+			</Router>
 		);
 	}
 }

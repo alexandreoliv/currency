@@ -1,19 +1,29 @@
 import "../App.css";
+import { Statistic } from "antd";
 
 export default function Rate(props) {
 	if (props.currencies) {
-		const { currencies, rates, amount, currencyFrom, currencyTo } = props;
+		const {
+			currencies,
+			rates,
+			amount,
+			currencyFrom,
+			currencyTo,
+			historic,
+		} = props;
 
 		return (
 			<div>
-				<div>
-					<h4>Total amount in {currencyTo}</h4>
-					<h3>{(amount * rates[currencyTo]).toFixed(2)}</h3>
-				</div>
-				<div>
-					<h4>Currency Exchange Rate</h4>
-					<h3>{rates[currencyTo]}</h3>
-				</div>
+				{historic ? null : (
+					<Statistic
+						title={"Total amount in " + currencyTo}
+						value={(amount * rates[currencyTo]).toFixed(2)}
+					/>
+				)}
+				<Statistic
+					title="Currency Exchange Rate"
+					value={rates[currencyTo]}
+				/>
 			</div>
 		);
 	} else return <div></div>;
